@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var starBackground:SKEmitterNode!
     var path = [[0,0,-1,0,0,1],
                 [-1,0,0,0,0,0],
                 [0,-1,0,0,-1,-1],
@@ -48,16 +49,17 @@ class GameScene: SKScene {
                 var block : SKSpriteNode
                 switch j{
                 case -1:
-                    block = SKSpriteNode(imageNamed: "ficha")
+                    block = SKSpriteNode(imageNamed: "alien")
                     row.append(block)
                 case 1:
-                    block = SKSpriteNode(imageNamed: "fichaM")
+                    block = SKSpriteNode(imageNamed: "heart")
                     row.append(block)
                 case 2:
-                    block = SKSpriteNode(imageNamed: "fichaV")
+                    block = SKSpriteNode(imageNamed: "nave")
                     row.append(block)
                 default:
-                    block = SKSpriteNode(imageNamed: "fichaA")
+                    block = SKSpriteNode(imageNamed: "libre")
+                    block.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
                     row.append(block)
                 }
             }
@@ -69,7 +71,7 @@ class GameScene: SKScene {
     
     func diplayRow(row: [SKSpriteNode], yPosition: Float ){
         
-        let size = CGSize(width: 66, height: 77)
+        let size = CGSize(width: 66, height: 66)
         
         for i in 0...row.count-1{
             row[i].position.y = CGFloat(yPosition)
@@ -110,17 +112,17 @@ class GameScene: SKScene {
             case 0:
                 diplayRow(row: graphicPath[i], yPosition: -217.635)
             case 1:
-                diplayRow(row: graphicPath[i], yPosition: -140.635)
+                diplayRow(row: graphicPath[i], yPosition: -151.635)
             case 2:
-                diplayRow(row: graphicPath[i], yPosition: -63.635)
+                diplayRow(row: graphicPath[i], yPosition: -85.635)
             case 3:
-                diplayRow(row: graphicPath[i], yPosition: 13.635)
+                diplayRow(row: graphicPath[i], yPosition: -19.635)
             case 4:
-                diplayRow(row: graphicPath[i], yPosition: 90.635)
+                diplayRow(row: graphicPath[i], yPosition: 46.635)
             case 5:
-                diplayRow(row: graphicPath[i], yPosition: 167.635)
+                diplayRow(row: graphicPath[i], yPosition: 112.635)
             default:
-                diplayRow(row: graphicPath[i], yPosition: 244.635)
+                diplayRow(row: graphicPath[i], yPosition: 178.635)
             }
         }
     }
@@ -128,6 +130,12 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         setStart(point: [0,0])
         displayGP()
+        
+        starBackground = SKEmitterNode(fileNamed: "Stars")
+        starBackground.position = CGPoint(x: 0, y: 0)
+        starBackground.advanceSimulationTime(10)
+        starBackground.zPosition = -1
+        self.addChild(starBackground)
     }
     
 }
