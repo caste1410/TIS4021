@@ -67,47 +67,52 @@ class GameScene: SKScene {
         return graphicPath.reversed()
     }
     
-    func displayGP(){
+    func delay(_ delay:Double, closure:@escaping ()->()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+    }
+    
+    func diplayRow(row: [SKSpriteNode]){
         
-        let graphicPath = makeGraphicPath(path: path)
         let size = CGSize(width: 66, height: 77)
         
-        for i in graphicPath{
-            var col = 0
-            for j in i{
-                j.position.y = self.size.height/2
-                j.zPosition = 0
-                j.size = size
-                j.physicsBody = SKPhysicsBody(rectangleOf: size)
-                j.physicsBody?.affectedByGravity = true
-                j.physicsBody?.allowsRotation = false
-                switch col{
-                case 0:
-                    j.position.x = self.size.width/(-2.45)
-                    col += 1
-                    addChild(j)
-                case 1:
-                    j.position.x = self.size.width/(-4)
-                    col += 1
-//                    addChild(j)
-                case 2:
-                    j.position.x = self.size.width/(-11.6)
-                    col += 1
-//                    addChild(j)
-                case 3:
-                    j.position.x = self.size.width/11.6
-                    col += 1
-//                    addChild(j)
-                case 4:
-                    j.position.x = self.size.width/4
-                    col += 1
-//                    addChild(j)
-                default:
-                    j.position.x = self.size.width/2.45
-                    col += 1
-//                    addChild(j)
-                }
+        for i in 0...row.count-1{
+            row[i].position.y = self.size.height/2
+            row[i].zPosition = 0
+            row[i].size = size
+            row[i].physicsBody = SKPhysicsBody(rectangleOf: size)
+            row[i].physicsBody?.affectedByGravity = true
+            row[i].physicsBody?.allowsRotation = false
+            
+            switch i{
+            case 0:
+                row[i].position.x = self.size.width/(-2.45)
+                addChild(row[i])
+            case 1:
+                row[i].position.x = self.size.width/(-4)
+                addChild(row[i])
+            case 2:
+                row[i].position.x = self.size.width/(-11.6)
+                addChild(row[i])
+            case 3:
+                row[i].position.x = self.size.width/11.6
+                addChild(row[i])
+            case 4:
+                row[i].position.x = self.size.width/4
+                addChild(row[i])
+            default:
+                row[i].position.x = self.size.width/2.45
+                addChild(row[i])
             }
+        }
+    
+    }
+    
+    func displayGP(){
+        let graphicPath = makeGraphicPath(path: path)
+        for i in graphicPath{
+            diplayRow(row: i)
+            break
         }
     }
     
