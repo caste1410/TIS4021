@@ -12,12 +12,12 @@ import GameplayKit
 class GameScene: SKScene {
     
     var path = [[0,0,-1,0,0,1],
-                  [-1,0,0,0,0,0],
-                  [0,-1,0,0,-1,-1],
-                  [0,0,0,0,0,0],
-                  [0,0,-1,0,0,-1],
-                  [0,0,0,0,-1,0],
-                  [0,0,0,-1,0,0]]
+                [-1,0,0,0,0,0],
+                [0,-1,0,0,-1,-1],
+                [0,0,0,0,0,0],
+                [0,0,-1,0,0,-1],
+                [0,0,0,0,-1,0],
+                [0,0,0,-1,0,0]]
     
     
     func setStart(point: [Int]) -> [Int]{
@@ -67,17 +67,12 @@ class GameScene: SKScene {
         return graphicPath.reversed()
     }
     
-    func delay(_ delay:Double, closure:@escaping ()->()) {
-        DispatchQueue.main.asyncAfter(
-            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
-    }
-    
-    func diplayRow(row: [SKSpriteNode]){
+    func diplayRow(row: [SKSpriteNode], yPosition: Float ){
         
         let size = CGSize(width: 66, height: 77)
         
         for i in 0...row.count-1{
-            row[i].position.y = self.size.height/2
+            row[i].position.y = CGFloat(yPosition)
             row[i].zPosition = 0
             row[i].size = size
             row[i].physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -105,14 +100,28 @@ class GameScene: SKScene {
                 addChild(row[i])
             }
         }
-    
+        
     }
     
     func displayGP(){
         let graphicPath = makeGraphicPath(path: path)
-        for i in graphicPath{
-            diplayRow(row: i)
-            break
+        for i in 0...graphicPath.count-1{
+            switch i{
+            case 0:
+                diplayRow(row: graphicPath[i], yPosition: -217.635)
+            case 1:
+                diplayRow(row: graphicPath[i], yPosition: -140.635)
+            case 2:
+                diplayRow(row: graphicPath[i], yPosition: -63.635)
+            case 3:
+                diplayRow(row: graphicPath[i], yPosition: 13.635)
+            case 4:
+                diplayRow(row: graphicPath[i], yPosition: 90.635)
+            case 5:
+                diplayRow(row: graphicPath[i], yPosition: 167.635)
+            default:
+                diplayRow(row: graphicPath[i], yPosition: 244.635)
+            }
         }
     }
     
@@ -120,5 +129,5 @@ class GameScene: SKScene {
         setStart(point: [0,0])
         displayGP()
     }
-
+    
 }
