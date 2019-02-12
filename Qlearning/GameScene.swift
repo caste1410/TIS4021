@@ -255,7 +255,7 @@ class GameScene: SKScene {
                 // Da tiempo para que el robot se mueva
                 group.enter()
                 DispatchQueue.global(qos: .default).async {
-                    sleep(UInt32(1))
+                    sleep(1)
                     self.group.leave()
                 }
                 // Espera a que se mueva
