@@ -14,6 +14,13 @@ class GameScene: SKScene {
     var anuncio : SKLabelNode!
     var starBackground:SKEmitterNode!
     var graphics : [[SKSpriteNode]]!
+    let realPath = [[ 0, 0,-1, 0, 0, 1],
+                    [-1, 0, 0, 0, 0, 0],
+                    [ 0,-1, 0, 0,-1,-1],
+                    [ 0, 0, 0, 0, 0, 0],
+                    [ 0, 0,-1, 0,-1, 0],
+                    [ 0, 0, 0, 0,-1, 0],
+                    [ 0, 0, 0,-1, 0, 0]]
     var path = [[ 0, 0,-1, 0, 0, 1],
                 [-1, 0, 0, 0, 0, 0],
                 [ 0,-1, 0, 0,-1,-1],
@@ -46,9 +53,9 @@ class GameScene: SKScene {
         }else if anuncio.text == "Terminado"{
 //Aqui iria lo que inicie el recorrido cool
         }
-        
     }
     func setStart(point: [Int]) -> [Int]{
+        path = realPath
         var startPoint = point
         var randomRow = randomInt(path.count)
         var randomColumn = randomInt(path[0].count)
@@ -157,6 +164,14 @@ class GameScene: SKScene {
         }
         return graphicPath
     }
+    func removeGP(){
+        for i in graphics{
+            for j in i{
+                j.removeFromParent()
+            }
+        }
+    
+    }
     
     override func didMove(to view: SKView) {
         //setStart(point: [randomInt(path.count), randomInt(path[0].count)])
@@ -203,7 +218,7 @@ class GameScene: SKScene {
     func qLearning() {
         DispatchQueue.global(qos: .default).async {
             self.stepOne_Two(g: 0.8, rewards: self.rewardMatrix())
-            self.stepThree(episodes: 1)
+            self.stepThree(episodes: 10)
         }
         
     }
@@ -250,6 +265,7 @@ class GameScene: SKScene {
                 current_state = next_state
                 
             } while (current_state != final_state)
+            removeGP()
         }
     }
     
@@ -279,7 +295,7 @@ class GameScene: SKScene {
     func update(previous: Int, current: Int) {
         let p = [previous/path[0].count, previous%path[0].count]
         let c = [current/path[0].count, current%path[0].count]
-        print("p\(previous):\(p)  ->  c\(current):\(c)")
+        anuncio.text = "p\(previous):\(p)  ->  c\(current):\(c)"
         graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
         graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
     }
