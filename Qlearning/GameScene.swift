@@ -12,6 +12,7 @@ import GameplayKit
 class GameScene: SKScene {
     
     var starBackground:SKEmitterNode!
+    var graphics : [[SKSpriteNode]]!
     var path = [[ 0, 0,-1, 0, 0, 1],
                 [-1, 0, 0, 0, 0, 0],
                 [ 0,-1, 0, 0,-1,-1],
@@ -25,6 +26,7 @@ class GameScene: SKScene {
     var r : [[Int]]!
     var q : [[Int]]!
     var final_state : Int!
+    let group = DispatchGroup()
     
     
     func setStart(point: [Int]) -> [Int]{
@@ -32,7 +34,7 @@ class GameScene: SKScene {
         var randomRow = randomInt(path.count)
         var randomColumn = randomInt(path[0].count)
         
-        if path[point[0]][point[1]] == 0{
+        if path[point[0]][point[1]] == 0 {
             path[point[0]][point[1]] = 2
         }else{
             while path[randomRow][randomColumn] != 0{
@@ -72,7 +74,7 @@ class GameScene: SKScene {
             graphicPath.append(row)
         }
         
-        return graphicPath.reversed()
+        return graphicPath
     }
     
     func diplayRow(row: [SKSpriteNode], yPosition: Float ){
@@ -111,40 +113,57 @@ class GameScene: SKScene {
         
     }
     
-    func displayGP(board: [[Int]], current_pos : [Int]){
+    func displayGP(board: [[Int]], current_pos : [Int]) -> [[SKSpriteNode]] {
         var path = board
-        path[current_pos[0]][current_pos[1]] = 2
+        if current_pos.count == 2 {
+            path[current_pos[0]][current_pos[1]] = 2
+        }
         let graphicPath = makeGraphicPath(path: path)
         for i in 0...graphicPath.count-1{
             switch i{
             case 0:
-                diplayRow(row: graphicPath[i], yPosition: -217.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: -217.635)
             case 1:
-                diplayRow(row: graphicPath[i], yPosition: -151.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: -151.635)
             case 2:
-                diplayRow(row: graphicPath[i], yPosition: -85.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: -85.635)
             case 3:
-                diplayRow(row: graphicPath[i], yPosition: -19.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: -19.635)
             case 4:
-                diplayRow(row: graphicPath[i], yPosition: 46.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: 46.635)
             case 5:
-                diplayRow(row: graphicPath[i], yPosition: 112.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: 112.635)
             default:
-                diplayRow(row: graphicPath[i], yPosition: 178.635)
+                diplayRow(row: graphicPath[graphicPath[0].count - i], yPosition: 178.635)
             }
         }
+        return graphicPath
     }
     
     override func didMove(to view: SKView) {
         //setStart(point: [randomInt(path.count), randomInt(path[0].count)])
-        //displayGP(board: path, current_pos: setStart(point: [randomInt(path.count), randomInt(path[0].count)]))
-        qLearning()
+        //displayGP(board: path, current_pos: [])
+        let group = DispatchGroup()
+        group.enter()
         
-        starBackground = SKEmitterNode(fileNamed: "Stars")
-        starBackground.position = CGPoint(x: 0, y: 0)
-        starBackground.advanceSimulationTime(10)
-        starBackground.zPosition = -1
-        self.addChild(starBackground)
+        // avoid deadlocks by not using .main queue here
+        DispatchQueue.global(qos: .default).async {
+            self.starBackground = SKEmitterNode(fileNamed: "Stars")
+            self.starBackground.position = CGPoint(x: 0, y: 0)
+            self.starBackground.advanceSimulationTime(10)
+            self.starBackground.zPosition = -1
+            self.addChild(self.starBackground)
+            group.leave()
+        }
+        
+        // wait ...
+        group.wait()
+        
+        
+        
+        //graphics = displayGP(board: path, current_pos: [0,0])
+        //update(previous: 0, current: 1)
+        qLearning()
     }
     
     
@@ -169,13 +188,11 @@ class GameScene: SKScene {
     
     func stepThree(episodes: Int) {
         for _ in 0 ..< episodes {
-            var init_pos = setStart(point: [randomInt(path.count), randomInt(path[0].count)])
-            //var current_state = path
+            var init_pos = [0, 0]//setStart(point: [randomInt(path.count), randomInt(path[0].count)])
             var current_state = 6 * init_pos[0] + init_pos[1]
-            //current_state[current_pos[0]][current_pos[1]] = 2
+            graphics = displayGP(board: path, current_pos: init_pos)
             
             repeat {
-                displayGP(board: path, current_pos: [current_state/path[0].count, current_state%path[0].count])
                 // Select one among all possible actions for the current state.
                 let possible_actions = getAllPosibleActions(state: current_state)
                 let next_state = selectOneOption(actions: possible_actions)
@@ -187,32 +204,42 @@ class GameScene: SKScene {
                 let reward = r[current_state][next_state]
                 q[current_state][next_state] = reward + Int(gamma * maxQ)
                 // Set the next state as the current state.
+                
+                group.enter()
+                // avoid deadlocks by not using .main queue here
+                DispatchQueue.global(qos: .default).async {
+                    //
+                //UIView.ani.animate(withDuration: 1.0, delay: 1.0) {
+//                        let p = [current_state/self.path[0].count, current_state%self.path[0].count]
+//                        let c = [next_state/self.path[0].count, next_state%self.path[0].count]
+//                        print("p\(current_state):\(p)  ->  c\(next_state):\(c)")
+//                        self.graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
+//                        self.graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
+                    sleep(1)
+                    self.group.leave()
+                    
+                    }
+                
+                
+                
+                // wait ...
+                group.wait()
+                self.update(previous: current_state, current: next_state)
                 current_state = next_state
                 
-                
             } while (current_state != final_state)
-            
-            
         }
-        
     }
     
     func randomInt(_ max: Int) -> Int {
         return Int.random(in: 0..<max)
     }
+    
     func getAllPosibleActions(state: Int) -> [[Int]]{
-        //var possible_actions : [[Int]]!
         var j = 0
-        /*possible_actions
-        /for j in 0 ..< r[0].count {
-            if r[state][j] >= 0 {
-                possible_actions.append([state, j, r[state][j]])
-            }
-        }*/
         return r[state].map {let triplet = [state, j, $0]; j += 1; return triplet}
-        //return possible_actions//.filter {$0[2] == max}
-        
     }
+    
     func selectOneOption(actions: [[Int]]) -> Int {
         // Obtener el maximo reward
         let max = actions.map {$0[2]}.max()!
@@ -221,9 +248,18 @@ class GameScene: SKScene {
         // Regresa un elemento al azhar
         return options.randomElement()!
     }
+    
     func Max(actions: [[Int]]) -> Int {
         // Regresa el maximo valor de refuerzo entre las acciones
         return actions.map { q[$0[0]][$0[1]]} .max()!
+    }
+    
+    func update(previous: Int, current: Int) {
+        let p = [previous/path[0].count, previous%path[0].count]
+        let c = [current/path[0].count, current%path[0].count]
+        print("p\(previous):\(p)  ->  c\(current):\(c)")
+        graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
+        graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
     }
     
     func rewardMatrix() -> [[Int]] {
