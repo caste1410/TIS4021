@@ -26,7 +26,19 @@ class GameScene: SKScene {
     var q : [[Int]]!
     var final_state : Int!
     
+    let tapRec = UITapGestureRecognizer()
     
+    func setGesture() {
+        tapRec.addTarget(self, action: #selector(GameScene.startLearning))
+        tapRec.numberOfTouchesRequired = 1
+        tapRec.numberOfTapsRequired = 1
+        self.view!.addGestureRecognizer(tapRec)
+    }
+    
+    @objc func startLearning() {
+        qLearning()
+        print("hoal")
+    }
     func setStart(point: [Int]) -> [Int]{
         var startPoint = point
         var randomRow = randomInt(path.count)
@@ -137,16 +149,14 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         //setStart(point: [randomInt(path.count), randomInt(path[0].count)])
-        //displayGP(board: path, current_pos: setStart(point: [randomInt(path.count), randomInt(path[0].count)]))
-        qLearning()
-        
+        displayGP(board: path, current_pos: setStart(point: [randomInt(path.count), randomInt(path[0].count)]))
+        setGesture()
         starBackground = SKEmitterNode(fileNamed: "Stars")
         starBackground.position = CGPoint(x: 0, y: 0)
         starBackground.advanceSimulationTime(10)
         starBackground.zPosition = -1
         self.addChild(starBackground)
     }
-    
     
     
     /* De aqui en adelante se implementa el algoritmo */
