@@ -218,7 +218,7 @@ class GameScene: SKScene {
     func qLearning() {
         DispatchQueue.global(qos: .default).async {
             self.stepOne_Two(g: 0.8, rewards: self.rewardMatrix())
-            self.stepThree(episodes: 10)
+            self.stepThree(episodes: 20)
         }
         
     }
@@ -255,7 +255,7 @@ class GameScene: SKScene {
                 // Da tiempo para que el robot se mueva
                 group.enter()
                 DispatchQueue.global(qos: .default).async {
-                    sleep(1)
+                    sleep(UInt32(0.7))
                     self.group.leave()
                 }
                 // Espera a que se mueva
@@ -265,7 +265,12 @@ class GameScene: SKScene {
                 current_state = next_state
                 
             } while (current_state != final_state)
-            removeGP()
+            if i != episodes - 1 {
+               removeGP()
+            }else{
+                print(q.count)
+            }
+            
         }
     }
     
