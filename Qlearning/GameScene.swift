@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var anuncio : SKLabelNode!
     var starBackground:SKEmitterNode!
     var graphics : [[SKSpriteNode]]!
     var path = [[ 0, 0,-1, 0, 0, 1],
@@ -28,7 +29,25 @@ class GameScene: SKScene {
     var final_state : Int!
     let group = DispatchGroup()
     
+    let tapRec = UITapGestureRecognizer()
     
+    func setGesture() {
+        tapRec.addTarget(self, action: #selector(GameScene.startLearning))
+        tapRec.numberOfTouchesRequired = 1
+        tapRec.numberOfTapsRequired = 1
+        self.view!.addGestureRecognizer(tapRec)
+    }
+    
+    @objc func startLearning() {
+        if anuncio.text == "Tap para aprender"{
+            anuncio.text = "Iniciando"
+            qLearning()
+            
+        }else if anuncio.text == "Terminado"{
+//Aqui iria lo que inicie el recorrido cool
+        }
+        
+    }
     func setStart(point: [Int]) -> [Int]{
         var startPoint = point
         var randomRow = randomInt(path.count)
@@ -67,7 +86,6 @@ class GameScene: SKScene {
                     row.append(block)
                 default:
                     block = SKSpriteNode(imageNamed: "libre")
-                    block.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
                     row.append(block)
                 }
             }
@@ -163,9 +181,21 @@ class GameScene: SKScene {
         
         //graphics = displayGP(board: path, current_pos: [0,0])
         //update(previous: 0, current: 1)
-        qLearning()
+        //qLearning()
+        //displayGP(board: path, current_pos: setStart(point: [randomInt(path.count), randomInt(path[0].count)]))
+        setGesture()
+        /*starBackground = SKEmitterNode(fileNamed: "Stars")
+        starBackground.position = CGPoint(x: 0, y: 0)
+        starBackground.advanceSimulationTime(10)
+        starBackground.zPosition = -1
+        self.addChild(starBackground)*/
+        
+        anuncio = SKLabelNode(text: "Tap para aprender")
+        anuncio.position.x = 0
+        anuncio.position.y = -350
+        anuncio.fontName = "Chalkboard"
+        addChild(anuncio)
     }
-    
     
     
     /* De aqui en adelante se implementa el algoritmo */
