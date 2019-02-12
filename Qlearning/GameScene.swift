@@ -235,11 +235,11 @@ class GameScene: SKScene {
     }
     
     func stepThree(episodes: Int) {
-        for _ in 0 ..< episodes {
-            var init_pos = [0, 0]//setStart(point: [randomInt(path.count), randomInt(path[0].count)])
+        for i in 0 ..< episodes {
+            var init_pos = setStart(point: [randomInt(path.count), randomInt(path[0].count)])
             var current_state = 6 * init_pos[0] + init_pos[1]
             graphics = displayGP(board: path, current_pos: init_pos)
-            
+            anuncio.text = "Vuelta: \(i+1)"
             repeat {
                 // Select one among all possible actions for the current state.
                 let possible_actions = getAllPosibleActions(state: current_state)
@@ -255,7 +255,7 @@ class GameScene: SKScene {
                 // Da tiempo para que el robot se mueva
                 group.enter()
                 DispatchQueue.global(qos: .default).async {
-                    sleep(1)
+                    sleep(UInt32(1))
                     self.group.leave()
                 }
                 // Espera a que se mueva
@@ -295,7 +295,7 @@ class GameScene: SKScene {
     func update(previous: Int, current: Int) {
         let p = [previous/path[0].count, previous%path[0].count]
         let c = [current/path[0].count, current%path[0].count]
-        anuncio.text = "p\(previous):\(p)  ->  c\(current):\(c)"
+//        anuncio.text = "p\(previous):\(p)  ->  c\(current):\(c)"
         graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
         graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
     }
