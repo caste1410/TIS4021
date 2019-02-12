@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    var anuncio : SKLabelNode!
     var starBackground:SKEmitterNode!
     var path = [[ 0, 0,-1, 0, 0, 1],
                 [-1, 0, 0, 0, 0, 0],
@@ -36,8 +37,14 @@ class GameScene: SKScene {
     }
     
     @objc func startLearning() {
-        qLearning()
-        print("hoal")
+        if anuncio.text == "Tap para aprender"{
+            anuncio.text = "Iniciando"
+            qLearning()
+            
+        }else if anuncio.text == "Terminado"{
+//Aqui iria lo que inicie el recorrido cool
+        }
+        
     }
     func setStart(point: [Int]) -> [Int]{
         var startPoint = point
@@ -77,7 +84,6 @@ class GameScene: SKScene {
                     row.append(block)
                 default:
                     block = SKSpriteNode(imageNamed: "libre")
-                    block.color = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
                     row.append(block)
                 }
             }
@@ -156,6 +162,12 @@ class GameScene: SKScene {
         starBackground.advanceSimulationTime(10)
         starBackground.zPosition = -1
         self.addChild(starBackground)
+        
+        anuncio = SKLabelNode(text: "Tap para aprender")
+        anuncio.position.x = 0
+        anuncio.position.y = -350
+        anuncio.fontName = "Chalkboard"
+        addChild(anuncio)
     }
     
     
