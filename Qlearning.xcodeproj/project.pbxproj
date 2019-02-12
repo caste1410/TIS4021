@@ -16,6 +16,7 @@
 		83043FCF220FC75D00C335FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83043FCE220FC75D00C335FA /* Assets.xcassets */; };
 		83043FD2220FC75D00C335FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83043FD0220FC75D00C335FA /* LaunchScreen.storyboard */; };
 		83C71F962210947400E45DA5 /* Stars.sks in Resources */ = {isa = PBXBuildFile; fileRef = 83C71F952210947400E45DA5 /* Stars.sks */; };
+		AB20963F22121947007A130D /* Rewards.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB20963E22121947007A130D /* Rewards.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		83043FD1220FC75D00C335FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83043FD3220FC75D00C335FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83C71F952210947400E45DA5 /* Stars.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Stars.sks; sourceTree = "<group>"; };
+		AB20963E22121947007A130D /* Rewards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rewards.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				83043FC3220FC75D00C335FA /* GameScene.sks */,
 				83043FC5220FC75D00C335FA /* Actions.sks */,
 				83043FC7220FC75D00C335FA /* GameScene.swift */,
+				AB20963E22121947007A130D /* Rewards.txt */,
 				83043FC9220FC75D00C335FA /* GameViewController.swift */,
 				83043FCB220FC75D00C335FA /* Main.storyboard */,
 				83043FCE220FC75D00C335FA /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 				83043FD2220FC75D00C335FA /* LaunchScreen.storyboard in Resources */,
 				83043FC6220FC75D00C335FA /* Actions.sks in Resources */,
 				83C71F962210947400E45DA5 /* Stars.sks in Resources */,
+				AB20963F22121947007A130D /* Rewards.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
