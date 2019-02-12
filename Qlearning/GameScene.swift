@@ -201,8 +201,11 @@ class GameScene: SKScene {
     /* De aqui en adelante se implementa el algoritmo */
     
     func qLearning() {
-        stepOne_Two(g: 0.8, rewards: rewardMatrix())
-        stepThree(episodes: 1)
+        DispatchQueue.global(qos: .default).async {
+            self.stepOne_Two(g: 0.8, rewards: self.rewardMatrix())
+            self.stepThree(episodes: 1)
+        }
+        
     }
     
     func  stepOne_Two(g : Float, rewards: [[Int]])  {
@@ -233,27 +236,16 @@ class GameScene: SKScene {
                 // Compute: Q(state, action) = R(state, action) + Gamma * Max[Q(next state, all actions)]
                 let reward = r[current_state][next_state]
                 q[current_state][next_state] = reward + Int(gamma * maxQ)
-                // Set the next state as the current state.
                 
+                // Da tiempo para que el robot se mueva
                 group.enter()
-                // avoid deadlocks by not using .main queue here
                 DispatchQueue.global(qos: .default).async {
-                    //
-                //UIView.ani.animate(withDuration: 1.0, delay: 1.0) {
-//                        let p = [current_state/self.path[0].count, current_state%self.path[0].count]
-//                        let c = [next_state/self.path[0].count, next_state%self.path[0].count]
-//                        print("p\(current_state):\(p)  ->  c\(next_state):\(c)")
-//                        self.graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
-//                        self.graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
                     sleep(1)
                     self.group.leave()
-                    
-                    }
-                
-                
-                
-                // wait ...
+                }
+                // Espera a que se mueva
                 group.wait()
+                // Set the next state as the current state.
                 self.update(previous: current_state, current: next_state)
                 current_state = next_state
                 
