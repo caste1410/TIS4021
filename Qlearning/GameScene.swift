@@ -213,7 +213,7 @@ class GameScene: SKScene {
         // Matrix de recompenzas
         r = rewards
         // Matriz de aprendizaje
-        q = init_q()
+        q = init_q(withKnowledge: true)
         
     }
     
@@ -238,7 +238,7 @@ class GameScene: SKScene {
                 // Da tiempo para que el robot se mueva
                 group.enter()
                 DispatchQueue.global(qos: .default).async {
-                    sleep(UInt32(0.7))
+                    sleep(1)
                     self.group.leave()
                 }
                 // Espera a que se mueva
@@ -251,10 +251,11 @@ class GameScene: SKScene {
             if i != episodes - 1 {
                removeGP()
             }else{
-                print(q.count)
+                
             }
             
         }
+        print(q)
     }
     
     func randomInt(_ max: Int) -> Int {
