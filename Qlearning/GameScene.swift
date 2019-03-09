@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
-    
+    var backgroundMusic : SKAudioNode!
     var anuncio : SKLabelNode!
     var starBackground:SKEmitterNode!
     var graphics : [[SKSpriteNode]]!
@@ -83,13 +83,13 @@ class GameScene: SKScene {
                 var block : SKSpriteNode
                 switch j{
                 case -1:
-                    block = SKSpriteNode(imageNamed: "alien")
+                    block = SKSpriteNode(imageNamed: "ladron")
                     row.append(block)
                 case 1:
-                    block = SKSpriteNode(imageNamed: "heart")
+                    block = SKSpriteNode(imageNamed: "bomba")
                     row.append(block)
                 case 2:
-                    block = SKSpriteNode(imageNamed: "nave")
+                    block = SKSpriteNode(imageNamed: "robot")
                     row.append(block)
                 default:
                     block = SKSpriteNode(imageNamed: "libre")
@@ -175,12 +175,16 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         let group = DispatchGroup()
+        let music = SKAudioNode(fileNamed: "MI.mp3")
 
         starBackground = SKEmitterNode(fileNamed: "Stars")
         starBackground.position = CGPoint(x: 0, y: 0)
         starBackground.advanceSimulationTime(10)
         starBackground.zPosition = -1
         addChild(starBackground)
+        backgroundMusic = music
+//        backgroundMusic.autoplayLooped = true
+        addChild(backgroundMusic)
 
         
         // wait ...
@@ -300,7 +304,7 @@ class GameScene: SKScene {
         let p = [previous/path[0].count, previous%path[0].count]
         let c = [current/path[0].count, current%path[0].count]
         graphics[p[0]][p[1]].texture = SKTexture(imageNamed: "libre")
-        graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "nave")
+        graphics[c[0]][c[1]].texture = SKTexture(imageNamed: "robot")
     }
     
     
