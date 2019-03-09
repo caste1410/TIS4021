@@ -16,7 +16,7 @@
 		83043FCF220FC75D00C335FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83043FCE220FC75D00C335FA /* Assets.xcassets */; };
 		83043FD2220FC75D00C335FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83043FD0220FC75D00C335FA /* LaunchScreen.storyboard */; };
 		83C71F962210947400E45DA5 /* Stars.sks in Resources */ = {isa = PBXBuildFile; fileRef = 83C71F952210947400E45DA5 /* Stars.sks */; };
-		83CB43EC2231812F006BB7F6 /* MI.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83CB43EB2231812F006BB7F6 /* MI.mp3 */; };
+		83CC4D70223438C800BE2FE3 /* Mission-Impossible.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83CC4D6F223438C800BE2FE3 /* Mission-Impossible.mp3 */; };
 		AB20963F22121947007A130D /* Rewards.txt in Resources */ = {isa = PBXBuildFile; fileRef = AB20963E22121947007A130D /* Rewards.txt */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +32,8 @@
 		83043FD1220FC75D00C335FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83043FD3220FC75D00C335FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83C71F952210947400E45DA5 /* Stars.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Stars.sks; sourceTree = "<group>"; };
-		83CB43EB2231812F006BB7F6 /* MI.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MI.mp3; sourceTree = "<group>"; };
+		83CC4D6E223437A300BE2FE3 /* MI.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = MI.m4a; sourceTree = "<group>"; };
+		83CC4D6F223438C800BE2FE3 /* Mission-Impossible.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Mission-Impossible.mp3"; sourceTree = "<group>"; };
 		AB20963E22121947007A130D /* Rewards.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Rewards.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,7 +86,8 @@
 		83CB43EA2231810B006BB7F6 /* MUSIC */ = {
 			isa = PBXGroup;
 			children = (
-				83CB43EB2231812F006BB7F6 /* MI.mp3 */,
+				83CC4D6E223437A300BE2FE3 /* MI.m4a */,
+				83CC4D6F223438C800BE2FE3 /* Mission-Impossible.mp3 */,
 			);
 			path = MUSIC;
 			sourceTree = "<group>";
@@ -150,7 +152,7 @@
 			files = (
 				83043FCD220FC75D00C335FA /* Main.storyboard in Resources */,
 				83043FC4220FC75D00C335FA /* GameScene.sks in Resources */,
-				83CB43EC2231812F006BB7F6 /* MI.mp3 in Resources */,
+				83CC4D70223438C800BE2FE3 /* Mission-Impossible.mp3 in Resources */,
 				83043FCF220FC75D00C335FA /* Assets.xcassets in Resources */,
 				83043FD2220FC75D00C335FA /* LaunchScreen.storyboard in Resources */,
 				83043FC6220FC75D00C335FA /* Actions.sks in Resources */,

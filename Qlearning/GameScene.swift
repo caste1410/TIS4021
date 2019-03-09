@@ -175,7 +175,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         let group = DispatchGroup()
-        let music = SKAudioNode(fileNamed: "MI.mp3")
+        let music = SKAudioNode(fileNamed: "Mission-Impossible.mp3")
 
         starBackground = SKEmitterNode(fileNamed: "Stars")
         starBackground.position = CGPoint(x: 0, y: 0)
@@ -183,7 +183,7 @@ class GameScene: SKScene {
         starBackground.zPosition = -1
         addChild(starBackground)
         backgroundMusic = music
-//        backgroundMusic.autoplayLooped = true
+        backgroundMusic.autoplayLooped = true
         addChild(backgroundMusic)
 
         
