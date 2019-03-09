@@ -217,7 +217,7 @@ class GameScene: SKScene {
         // Matrix de recompenzas
         r = rewards
         // Matriz de aprendizaje
-        q = init_q()
+        q = init_q(withKnowledge: true)
         
     }
     
@@ -255,10 +255,11 @@ class GameScene: SKScene {
             if i != episodes - 1 {
                removeGP()
             }else{
-                print(q.count)
+                
             }
             
         }
+        print(q)
     }
     
     func randomInt(_ max: Int) -> Int {
